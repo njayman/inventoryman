@@ -1,3 +1,4 @@
+import { DB_FILE_NAME } from "@/utils/constants";
 import { NextResponse } from "next/server";
 import path from "path";
 
@@ -11,7 +12,7 @@ export async function POST(req: Request) {
     }
 
     // Where to store the restored SQLite database
-    const dbPath = path.join(process.cwd(), "sqlite.db");
+    const dbPath = path.join(process.cwd(), DB_FILE_NAME);
 
     // Bun.write accepts File, Blob, ArrayBuffer, string, etc.
     await Bun.write(dbPath, file);

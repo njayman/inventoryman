@@ -1,8 +1,9 @@
+import { DB_FILE_NAME } from "@/utils/constants";
 import { NextResponse } from "next/server";
 import path from "path";
 
 export async function GET() {
-  const dbPath = path.join(process.cwd(), "sqlite.db");
+  const dbPath = path.join(process.cwd(), DB_FILE_NAME);
 
   const file = Bun.file(dbPath);
 
@@ -13,11 +14,11 @@ export async function GET() {
     );
   }
 
-  // Stream file directly in the response
+  const timestamp = new Date().toISOString();
   return new Response(file, {
     headers: {
       "Content-Type": "application/octet-stream",
-      "Content-Disposition": "attachment; filename=sqlite_backup.db",
+      "Content-Disposition": `attachment; filename=sqlite_backup_${timestamp}.db`,
     },
   });
 }
